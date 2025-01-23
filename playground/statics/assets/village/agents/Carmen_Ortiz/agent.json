@@ -1,0 +1,109 @@
+{
+  "name": "Carmen Oritiz",
+  "portrait": "assets/village/agents/Carmen_Ortiz/portrait.png",
+  "coord": [
+    57,
+    74
+  ],
+  "currently": "Carmen Oritiz is managing the front desk at a busy medical office. He is responsible for scheduling appointments, checking in patients, and coordinating communication between staff and patients.",
+  "scratch": {
+    "age": 25,
+    "innate": "organized, communicative, efficient",
+    "learned": "Carmen Oritiz is a receptionist known for his excellent communication skills and proficiency with office software. He ensures the smooth operation of the office by managing appointments and patient interactions.",
+    "lifestyle": "Carmen Oritiz goes to bed around 10pm, wakes up around 6am, and enjoys a balanced breakfast before starting his day at the office.",
+    "daily_plan": "Carmen Oritiz arrives at the office by 8am, manages the front desk, and ensures all appointments and communications are handled efficiently throughout the day."
+  },
+  "spatial": {
+    "address": {
+      "living_area": [
+        "the Ville",
+        "Lin family's house",
+        "Carmen Oritiz's bedroom"
+      ]
+    },
+    "tree": {
+      "the Ville": {
+        "Lin family's house": {
+          "bathroom": [
+            "toilet",
+            "shower",
+            "bathroom sink"
+          ],
+          "common room": [
+            "shelf",
+            "common room table"
+          ],
+          "Mei and John Lin's bedroom": [
+            "closet",
+            "desk",
+            "bed"
+          ],
+          "garden": [
+            "house garden"
+          ]
+        },
+        "The Willows Market and Pharmacy": {
+          "store": [
+            "grocery store shelf",
+            "behind the grocery counter",
+            "grocery store counter",
+            "behind the pharmacy counter",
+            "pharmacy store shelf",
+            "pharmacy store counter"
+          ]
+        },
+        "Harvey Oak Supply Store": {
+          "supply store": [
+            "supply store product shelf",
+            "behind the supply store counter",
+            "supply store counter"
+          ]
+        },
+        "Johnson Park": {
+          "park": [
+            "park garden"
+          ]
+        },
+        "The Rose and Crown Pub": {
+          "pub": [
+            "shelf",
+            "refrigerator",
+            "bar customer seating",
+            "behind the bar counter",
+            "kitchen sink",
+            "cooking area",
+            "microphone"
+          ]
+        },
+        "Hobbs Cafe": {
+          "cafe": [
+            "refrigerator",
+            "cafe customer seating",
+            "cooking area",
+            "kitchen sink",
+            "behind the cafe counter",
+            "piano"
+          ]
+        },
+        "Oak Hill College": {
+          "hallway": [],
+          "classroom": [
+            "blackboard",
+            "classroom podium",
+            "classroom student seating"
+          ],
+          "library": [
+            "library sofa",
+            "library table",
+            "bookshelf"
+          ]
+        },
+        "Dorm for Oak Hill College": {
+          "garden": [
+            "dorm garden"
+          ]
+        }
+      }
+    }
+  }
+}

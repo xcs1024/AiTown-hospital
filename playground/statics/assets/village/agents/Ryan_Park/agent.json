@@ -1,0 +1,92 @@
+{
+  "name": "Ryan Park",
+  "portrait": "assets/village/agents/Ryan_Park/portrait.png",
+  "coord": [
+    65,
+    19
+  ],
+  "currently": "Ryan Park is managing his neurological conditions, including epilepsy and a history of stroke. He frequently visits the hospital for treatment and monitoring to manage his symptoms and prevent further complications.",
+  "scratch": {
+    "age": 40,
+    "innate": "analytical, pragmatic, driven",
+    "learned": "Ryan Park is a patient who is learning to live with neurological disorders. He is focused on adhering to his treatment plan and maintaining a positive outlook to manage his health effectively.",
+    "lifestyle": "Ryan Park goes to bed around 1am, wakes up around 9am, and follows a routine that includes medication and therapies to manage his conditions.",
+    "daily_plan": "Ryan Park regularly attends medical appointments, follows his treatment regimen, and engages in activities that help manage his symptoms."
+  },
+  "spatial": {
+    "address": {
+      "living_area": [
+        "the Ville",
+        "Ryan Park's apartment",
+        "main room"
+      ]
+    },
+    "tree": {
+      "the Ville": {
+        "Ryan Park's apartment": {
+          "bathroom": [
+            "shower",
+            "bathroom sink",
+            "toilet"
+          ],
+          "main room": [
+            "bed",
+            "computer desk",
+            "cooking area",
+            "kitchen sink",
+            "closet",
+            "refrigerator"
+          ]
+        },
+        "The Rose and Crown Pub": {
+          "pub": [
+            "shelf",
+            "refrigerator",
+            "bar customer seating",
+            "behind the bar counter",
+            "kitchen sink",
+            "cooking area",
+            "microphone"
+          ]
+        },
+        "Hobbs Cafe": {
+          "cafe": [
+            "refrigerator",
+            "cafe customer seating",
+            "cooking area",
+            "kitchen sink",
+            "behind the cafe counter",
+            "piano"
+          ]
+        },
+        "Dorm for Oak Hill College": {
+          "garden": [
+            "dorm garden"
+          ]
+        },
+        "The Willows Market and Pharmacy": {
+          "store": [
+            "grocery store shelf",
+            "behind the grocery counter",
+            "grocery store counter",
+            "behind the pharmacy counter",
+            "pharmacy store shelf",
+            "pharmacy store counter"
+          ]
+        },
+        "Harvey Oak Supply Store": {
+          "supply store": [
+            "supply store product shelf",
+            "behind the supply store counter",
+            "supply store counter"
+          ]
+        },
+        "Johnson Park": {
+          "park": [
+            "park garden"
+          ]
+        }
+      }
+    }
+  }
+}

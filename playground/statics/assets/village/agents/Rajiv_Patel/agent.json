@@ -1,0 +1,105 @@
+{
+  "name": "Rajiv Patel",
+  "portrait": "assets/village/agents/Rajiv_Patel/portrait.png",
+  "coord": [
+    26,
+    18
+  ],
+  "currently": "Rajiv Patel is managing his chronic conditions, including osteoarthritis and asthma. He frequently visits the hospital for check-ups and treatment to manage his symptoms and improve his quality of life.",
+  "scratch": {
+    "age": 27,
+    "innate": "patient, reliable, cheerful",
+    "learned": "Rajiv Patel is a patient who is learning to live with chronic illnesses. He is focused on maintaining a positive outlook and following his treatment plan to manage his health effectively.",
+    "lifestyle": "Rajiv Patel goes to bed around midnight, wakes up around 9am, and follows a routine that includes medication and exercises to manage his conditions.",
+    "daily_plan": "Rajiv Patel regularly attends medical appointments, follows his treatment regimen, and engages in activities that help manage his symptoms."
+  },
+  "spatial": {
+    "address": {
+      "living_area": [
+        "the Ville",
+        "artist's co-living space",
+        "Rajiv Patel's room"
+      ]
+    },
+    "tree": {
+      "the Ville": {
+        "artist's co-living space": {
+          "Rajiv Patel's room": [
+            "bed",
+            "easel",
+            "closet",
+            "guitar"
+          ],
+          "Rajiv Patel's bathroom": [
+            "shower",
+            "bathroom sink",
+            "toilet"
+          ],
+          "kitchen": [
+            "refrigerator",
+            "toaster",
+            "kitchen sink",
+            "cooking area"
+          ],
+          "common room": [
+            "common room table",
+            "common room sofa"
+          ]
+        },
+        "The Rose and Crown Pub": {
+          "pub": [
+            "shelf",
+            "refrigerator",
+            "bar customer seating",
+            "behind the bar counter",
+            "kitchen sink",
+            "cooking area",
+            "microphone"
+          ]
+        },
+        "Hobbs Cafe": {
+          "cafe": [
+            "refrigerator",
+            "cafe customer seating",
+            "cooking area",
+            "kitchen sink",
+            "behind the cafe counter",
+            "piano"
+          ]
+        },
+        "Oak Hill College": {
+          "hallway": []
+        },
+        "Dorm for Oak Hill College": {
+          "common room": [
+            "common room sofa",
+            "pool table",
+            "common room table"
+          ]
+        },
+        "The Willows Market and Pharmacy": {
+          "store": [
+            "grocery store shelf",
+            "behind the grocery counter",
+            "grocery store counter",
+            "pharmacy store shelf",
+            "pharmacy store counter",
+            "behind the pharmacy counter"
+          ]
+        },
+        "Harvey Oak Supply Store": {
+          "supply store": [
+            "supply store product shelf",
+            "behind the supply store counter",
+            "supply store counter"
+          ]
+        },
+        "Johnson Park": {
+          "park": [
+            "park garden"
+          ]
+        }
+      }
+    }
+  }
+}

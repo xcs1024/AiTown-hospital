@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <div id="msg" style="font-size:0.8vw">
+        <div id="msg_board" class="nes-container is-rounded is-dark with-title" style="width:35vw; position:fixed">
+            <span class="title" style="font-size:0.8vw">[[user.time.current]]</span>
+
+            <div id="player">
+                <div style="background-color:#212529; padding:0; width:100%">
+                    <div class="nes-select is-dark">
+                        <select required id="dark_select" @change="playerChange($event)">
+                            <option value="" disabled selected hidden>Choose agent...</option>
+                            <option v-for="agent in agents" :value=[[agent]] selected>
+                                [[agent]]
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <img v-bind:src="[[player.portrait]]" alt="" style="margin: 1vh 0.5vw;">
+                <label style="padding: 1vh 1vw">
+                    <input type="checkbox" class="nes-checkbox is-dark" @change="playerFollow($event)">
+                    <span>Follow</span>
+                </label>
+                <label style="padding: 1vh 1vw">
+                    <input type="checkbox" class="nes-checkbox is-dark" @change="playerControl($event)">
+                    <span>Control</span>
+                </label>
+            </div>
+
+            <ul class="nav nav-tabs" style="font-size:1vw">
+                <li class="nav-item">
+                    <a class="nav-link" style="padding: 1vw" @click="boardDisplay('agent')">Agent
+                        <i :class="{ 'arrow': true, 'up': display.agent, 'down': !display.agent }"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="padding: 1vw" @click="boardDisplay('user')">User
+                        <i :class="{ 'arrow': true, 'up': display.user, 'down': !display.user }"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div id="agent" v-show="display.agent" style="height:80vh">
+                <br>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" v-for="(val,tab) in agent.display">
+                        <a class="nav-link" href="#" style="padding: 0.5vw"
+                           @click="boardDisplay([[tab]],'agent')">[[tab]]</a>
+                    </li>
+                </ul>
+
+                <div id="agent_profile" class="nes-container is-dark msg_box" v-show="agent.display.profile">
+                    <p>Status:</p>
+                    <p v-for="l in agent.profile.status" class="message">[[l]]</p><br>
+                    <p>Scratch:</p>
+                    <p v-for="l in agent.profile.scratch" class="message">[[l]]</p><br>
+                </div>
+
+                <div id="agent_memory" class="nes-container is-dark msg_box" v-show="agent.display.memory">
+                    <p>Associate:</p>
+                    <p v-for="l in agent.memory.associate" class="message">[[l]]</p><br>
+                    <p>Chats:</p>
+                    <div v-for="l in agent.memory.chats">
+                        <div v-show="l.name == 'self'">
+                            <p class="nes-balloon from-left nes-pointer is-dark">
+                                [[l.name]] : [[l.chat]]
+                            </p>
+                        </div>
+                        <div v-show="l.name != 'self'">
+                            <p class="nes-balloon from-right nes-pointer is-dark">
+                                [[l.name]] : [[l.chat]]
+                            </p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+
+                <div id="agent_percept" class="nes-container is-dark msg_box" v-show="agent.display.percept">
+                    <p>Concepts:</p>
+                    <p v-for="l in agent.percept.concepts" class="message">[[l]]</p><br>
+                </div>
+
+                <div id="agent_plan" class="nes-container is-dark msg_box" v-show="agent.display.plan">
+                    <p>Action:</p>
+                    <p v-for="l in agent.plan.action" class="message">[[l]]</p><br>
+                    <p>Schedule:</p>
+                    <p v-for="l in agent.plan.schedule" class="message">[[l]]</p><br>
+                </div>
+
+                <div id="agent_stat" class="nes-container is-dark msg_box" v-show="agent.display.stat">
+                    <p>LLM:</p>
+                    <p v-for="l in agent.stat.llm" class="message">[[l]]</p><br>
+                </div>
+
+            </div>
+
+            <div id="user" v-show="display.user" style="height:80vh">
+                <br>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" v-for="(val,tab) in user.display">
+                        <a class="nav-link" href="#" style="padding: 0.5vw"
+                           @click="boardDisplay([[tab]],'user')">[[tab]]</a>
+                    </li>
+                </ul>
+
+                <div id="user_info" class="nes-container is-dark msg_box" v-show="user.display.info">
+                    <form v-show="user.user ==''">
+                        <input type="text" class="nes-input is-dark" placeholder="user name" v-model="user.info.name">
+                        <input type="password" class="nes-input is-dark" placeholder="user password"
+                               v-model="user.info.password">
+                        <input type="text" class="nes-input is-dark" placeholder="user email" v-model="user.info.email">
+                    </form>
+                    <div v-show="user.user !=''">
+                        <p>Login as [[user.user]]</p>
+                        <table class="nes-table is-bordered is-dark message" style="width:100%; margin:0">
+                            <thead>
+                            <tr>
+                                <th>LLM Key</th>
+                                <th>Create at</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="key in user.llm_keys">
+                                <td>[[key.key]]</td>
+                                <td>[[key.create]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" v-show="user.user ==''" class="nes-btn is-warning" style="width:8vw"
+                            @click="userLogin()">Login
+                    </button>
+                    <button type="submit" v-show="user.user !=''" class="nes-btn is-warning" style="width:8vw"
+                            @click="userLogout()">Logout
+                    </button>
+                </div>
+
+                <div id="user_keys" class="nes-container is-dark msg_box" v-show="user.display.keys">
+                    <form>
+                        <input type="text" class="nes-input is-dark" placeholder="key" v-model="user.keys.key">
+                        <input type="text" class="nes-input is-dark" placeholder="value" v-model="user.keys.value">
+                    </form>
+                    <button type="submit" class="nes-btn is-warning" style="width:8vw" @click="userAddKey()">AddKey
+                    </button>
+                </div>
+
+                <div id="user_time" class="nes-container is-dark msg_box" v-show="user.display.time">
+                    <button type="submit" class="nes-btn is-warning" style="width:8vw"
+                            @click="userTimeBackward()">-10min
+                    </button>
+                    <button type="submit" class="nes-btn is-warning" style="width:8vw"
+                            @click="userTimeForward()">+10min
+                    </button>
+                    <button type="submit" class="nes-btn is-warning" style="width:8vw" @click="userTimeSpeedup()">X
+                        [[user.time.rate]]
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='phaser-canvas'></div>
+
+{% endblock %}
+
+{% block js_content %}
+    <script>
+        var ctx = {{ ctx| safe }};
+        var msg = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#msg',
+            data: {
+                parent: "phaser-canvas",
+                assets_root: "{% static '' %}",
+                urls: {
+                    start_game: "{% url 'start_game' %}",
+                    agent_think: "{% url 'agent_think' %}",
+                    agent_save: "{% url 'agent_save' %}",
+                    get_time: "{% url 'get_time' %}",
+                    user_login: "{% url 'user_login' %}",
+                    user_logout: "{% url 'user_logout' %}",
+                    user_add_key: "{% url 'user_add_key' %}",
+                },
+                agents: ctx.agents,
+                agent_portaits: {},
+                player: {
+                    update: {},
+                    player: "",
+                    portrait: "",
+                },
+                display: {agent: false, user: false},
+                agent: {
+                    display: {profile: true, memory: false, percept: false, plan: false, stat: false},
+                    profile: {status: [], scratch: []},
+                    memory: {associate: [], chats: []},
+                    percept: {concepts: []},
+                    plan: {action: [], schedule: []},
+                    stat: {llm: []}
+                },
+                user: {
+                    user: ctx.user,
+                    llm_keys: ctx.llm_keys,
+                    display: {info: true, keys: false, time: false},
+                    info: {name: "", password: "", email: ""},
+                    keys: {key: "", value: ""},
+                    time: {
+                        update: {},
+                        current: "Jan 1, 00:00 AM",
+                        rate: 1
+                    },
+                }
+            },
+            methods: {
+                jsonRequest: function (url, data, callback) {
+                    var xobj = new XMLHttpRequest();
+                    xobj.overrideMimeType("application/json");
+                    xobj.onreadystatechange = function () {
+                        if (xobj.readyState == XMLHttpRequest.DONE) {
+                            const response = JSON.parse(xobj.responseText);
+                            if (response.success) {
+                                callback(response.info);
+                            } else {
+                                alert(response.error);
+                            }
+                        }
+                    }
+                    xobj.open('POST', url, true);
+                    xobj.send(JSON.stringify(data));
+                },
+                boardDisplay: function (tab_name, board = "") {
+                    if (board === "") {
+                        for (const key of Object.keys(this.display)) {
+                            if (key !== tab_name) {
+                                this.display[key] = false;
+                            }
+                        }
+                        this.display[tab_name] = !this.display[tab_name];
+                    } else {
+                        for (const key of Object.keys(this[board].display)) {
+                            this[board].display[key] = false;
+                        }
+                        this[board].display[tab_name] = true;
+                    }
+                },
+                playerFollow: function (event) {
+                    this.player.update["follow"] = event.target.checked;
+                },
+                playerControl: function (event) {
+                    this.player.update["control"] = event.target.checked;
+                },
+                playerChange: function (event) {
+                    this.player.update["player"] = event.target.value;
+                    this.player.update["follow"] = false;
+                    this.player.update["control"] = false;
+                },
+                userEmpty: function (tab_name) {
+                    for (const key of Object.entries(this.user[tab_name])) {
+                        this.user[tab_name][key] = "";
+                    }
+                },
+                userLogin: function () {
+                    let callback = (info) => {
+                        this.user.user = info.name;
+                        this.user.llm_keys = info.llm_keys;
+                    }
+                    this.jsonRequest(this.urls.user_login, this.user.info, callback);
+                    this.userEmpty("info");
+                },
+                userLogout: function () {
+                    let callback = (info) => {
+                        this.user.user = "";
+                        this.user.llm_keys = [];
+                    }
+                    this.jsonRequest(this.urls.user_logout, {}, callback);
+                },
+                userAddKey: function () {
+                    let callback = (info) => {
+                        this.user.llm_keys = info.llm_keys;
+                    }
+                    this.jsonRequest(this.urls.user_add_key, this.user.keys, callback);
+                    this.userEmpty("keys");
+                },
+                userTimeBackward: function () {
+                    this.user.time.update["offset"] = -10;
+                },
+                userTimeForward: function () {
+                    this.user.time.update["offset"] = 10;
+                },
+                userTimeSpeedup: function () {
+                    this.user.time.rate *= 2;
+                    if (this.user.time.rate >= 32) {
+                        this.user.time.rate = 1;
+                    }
+                    this.user.time.update["rate"] = this.user.time.rate;
+                },
+                userDisplay: function (tab_name) {
+                    singleDisplay(this.user, tab_name);
+                }
+            }
+        });
+    </script>
+
+    <script type="module" src="{% static 'src/village/game.js' %}"></script>
+
+{% endblock %}

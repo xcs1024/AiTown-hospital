@@ -1,0 +1,40 @@
+.arrow {
+    border: solid rgb(255, 255, 255);
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.nes-container.msg_box {
+    margin: 0;
+    border-width: 2px;
+    padding: 0.5vh 0.5vw;
+    overflow: auto;
+    height: 90%;
+}
+
+.message {
+    font-size: 0.8vw;
+    padding: 0;
+    margin: 0
+}

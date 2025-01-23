@@ -1,0 +1,99 @@
+{
+    "direction": "down",
+    "zone": [
+        [
+            38,
+            50
+        ],
+        [
+            36,
+            52
+        ]
+    ],
+    "anims": {
+        "left-walk": {
+            "frameRate": 8,
+            "repeat": -1,
+            "frames": {
+                "start": 0,
+                "end": 3,
+                "zeroPad": 3,
+                "prefix": "left-walk."
+            }
+        },
+        "right-walk": {
+            "frameRate": 8,
+            "repeat": -1,
+            "frames": {
+                "start": 0,
+                "end": 3,
+                "zeroPad": 3,
+                "prefix": "right-walk."
+            }
+        },
+        "down-walk": {
+            "frameRate": 8,
+            "repeat": -1,
+            "frames": {
+                "start": 0,
+                "end": 3,
+                "zeroPad": 3,
+                "prefix": "down-walk."
+            }
+        },
+        "up-walk": {
+            "frameRate": 8,
+            "repeat": -1,
+            "frames": {
+                "start": 0,
+                "end": 3,
+                "zeroPad": 3,
+                "prefix": "up-walk."
+            }
+        }
+    },
+    "move": {
+        "speed": 100,
+        "left": {
+            "anim": "left-walk",
+            "texture": "left"
+        },
+        "right": {
+            "anim": "right-walk",
+            "texture": "right"
+        },
+        "up": {
+            "anim": "up-walk",
+            "texture": "up"
+        },
+        "down": {
+            "anim": "down-walk",
+            "texture": "down"
+        }
+    },
+    "percept": {
+        "mode": "box",
+        "vision_r": 8,
+        "att_bandwidth": 8
+    },
+    "think": {
+        "mode": "llm",
+        "llm": {
+            "model": "Yi-34B-Chat"
+        },
+        "interval": 1000,
+        "poignancy_max": 150
+    },
+    "spatial": {},
+    "associate": {
+        "embedding": {
+            "type": "hugging_face",
+            "model": "BAAI/bge-small-en-v1.5"
+        },
+        "retention": 8
+    },
+    "schedule": {
+        "max_try": 3,
+        "diversity": 5
+    }
+}
