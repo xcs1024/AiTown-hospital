@@ -79,7 +79,7 @@
     "think": {
         "mode": "llm",
         "llm": {
-            "model": "Yi-34B-Chat"
+            "model": "gpt-3.5-turbo"
         },
         "interval": 1000,
         "poignancy_max": 150

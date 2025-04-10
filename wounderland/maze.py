@@ -120,7 +120,11 @@ class Maze:
         ]
         for tile in config["tiles"]:
             x, y = tile.pop("coord")
+            if y >= self.maze_height or x >= self.maze_width:
+                raise ValueError(
+                    f"Tile coordinate ({x}, {y}) out of bounds for maze size ({self.maze_width}, {self.maze_height})")
             self.tiles[y][x] = Tile((x, y), config["world"], address_keys, **tile)
+
 
         # define address
         self.address_tiles = dict()
@@ -204,4 +208,4 @@ class Maze:
         addr = ":".join(address)
         if addr in self.address_tiles:
             return self.address_tiles[addr]
-        return random.choice(self.address_tiles.values())
+        return random.choice(list(self.address_tiles.values()))

@@ -18,7 +18,10 @@ args = parser.parse_args()
 
 
 def get_config(agents=None):
-    agents = agents or ["Isabella Rodriguez", "Klaus Mueller", "Maria Lopez"]
+    # agents = agents or ["Carmen Oritiz","Eddy Lin","Abigail Chen","Ayesha Khan","Carlos Gomez","Francisco Lopez","Giorgio Rossi","Latoya Williams",
+    #                     "Mei Lin","Sam Moore","Tamara Taylor","Tom Moreno","Jane Moreno","Jennifer Moore","John Lin","Hailey Johnson","Arthur Burton",
+    #                     "Isabella Rodriguez", "Klaus Mueller", "Maria Lopez","Rajiv Patel","Ryan Park"]
+    agents = agents or ["Arthur Burton", "Maria Lopez", "Abigail Chen"]
     assets_root = os.path.join("assets", "village")
     config = {
         "maze": {"path": os.path.join(assets_root, "maze.json")},

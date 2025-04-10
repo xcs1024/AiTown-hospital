@@ -6,6 +6,7 @@ import json
 import requests
 from wounderland.utils.namespace import ModelType
 from wounderland import utils
+from openai import OpenAI
 
 
 class ModelStyle:
@@ -15,6 +16,7 @@ class ModelStyle:
     QIANFAN = "qianfan"
     SPARK_AI = "sparkai"
     ZHIPU_AI = "zhipuai"
+    DEEPSEEK = "deepseek"
 
 
 class LLMModel:
@@ -101,10 +103,9 @@ class LLMModel:
 @utils.register_model
 class OpenAILLMModel(LLMModel):
     def setup(self, keys, config):
-        from openai import OpenAI
-
-        self._embedding_model = config.get("embedding_model", "text-embedding-3-small")
-        return OpenAI(api_key=keys["OPENAI_API_KEY"])
+        self._base_url = "https://api.openai-hk.com/v1"
+        self._embedding_model = "text-embedding-3-small"
+        return OpenAI(api_key=keys["OPENAI_API_KEY"], base_url=self._base_url)
 
     def _embedding(self, text):
         response = self._handle.embeddings.create(
@@ -278,52 +279,59 @@ class SparkAILLMModel(LLMModel):
 
 
 @utils.register_model
-class OllamaLLMModel(LLMModel):
+class DEEPSEEKModel(LLMModel):
     def setup(self, keys, config):
-        self.base_url = "http://219.147.100.43:8088"  # base_url
-        self.model = "qwen2.5:72b"  # 加载模型
-        self._embedding_model = "nomic-embed-text"  # 嵌入模型配置
-        return {"base_url": self.base_url, "model": self.model}
-
-    def _completion(self, prompt, temperature=0.00001, max_tokens=150):
-        url = f"{self.base_url}/completions"
-        headers = {"Content-Type": "application/json"}
-        data = {
-            "model": self.model,
-            "prompt": prompt,
-            "temperature": temperature,
-            "max_tokens": max_tokens
-        }
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 200:
-            return response.json().get("choices", [{}])[0].get("text", "")
-        else:
-            raise ValueError(f"Error in completion: {response.status_code}, {response.text}")
+        self._api_key = keys["DEEPSEEK_AK"]
+        self._base_url = "https://api.deepseek.com/v1"
+        self._embedding_model = config.get("embedding_model", "Pro/deepseek-ai/DeepSeek-R1")
+        return self
 
     def _embedding(self, text):
-        url = f"{self.base_url}/embeddings"
-        headers = {"Content-Type": "application/json"}
-        data = {
+        url = f"{self._base_url}/embeddings"
+        payload = {
             "model": self._embedding_model,
             "input": text
         }
-        response = requests.post(url, headers=headers, json=data)
-        if response.status_code == 200:
-            return response.json().get("data", [{}])[0].get("embedding", [])
-        else:
-            raise ValueError(f"Error in embedding: {response.status_code}, {response.text}")
+        headers = {
+            "Authorization": f"Bearer {self._api_key}",
+            "Content-Type": "application/json"
+        }
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()
+        return response.json()["data"][0]["embedding"]
+
+    def _completion(self, prompt, temperature=0.00001):
+        url = f"{self._base_url}/completions"
+        payload = {
+            "model": self._embedding_model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": temperature
+        }
+        headers = {
+            "Authorization": f"Bearer {self._api_key}",
+            "Content-Type": "application/json"
+        }
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()
+        choices = response.json().get("choices", [])
+        return choices[0]["message"]["content"] if choices else ""
 
     @classmethod
     def support_model(cls, model):
-        return model in ("qwen2.5:72b",)
+        return model in ("Pro/deepseek-ai/DeepSeek-R1", "Pro/deepseek-ai/DeepSeek-V3")
 
     @classmethod
     def creatable(cls, keys, config):
-        return True
+        return "DEEPSEEK_AK" in keys
 
     @classmethod
     def model_style(cls):
-        return ModelStyle.OPEN_AI
+        return ModelStyle.DEEPSEEK
+
+    @classmethod
+    def model_type(cls):
+        return ModelType.LLM
+
 
 
 def create_llm_model(model, keys, config=None):
